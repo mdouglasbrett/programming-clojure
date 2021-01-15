@@ -9,3 +9,7 @@
 lib/*
 .lein-failures
 classes/*
+.idea
+.lein-repl-history
+.nrepl-port
+target
