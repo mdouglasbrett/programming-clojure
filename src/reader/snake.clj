@@ -20,3 +20,17 @@
    VK_RIGHT [1 0]
    VK_UP    [0 -1]
    VK_DOWN  [0 1]})
+
+(defn add-points [& pts]
+  (vec (apply map + pts)))
+
+(defn point-to-screen-rect [pt]
+  (map #(* point-size %)
+       [(pt 0) (pt 1) 1 1]))
+
+(defn create-apple []
+  {:location [(rand-int width) (rand-int height)]
+   :color (Color. 210 50 90)
+   :type :apple})
+
+; (defn create-snake [])
