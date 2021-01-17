@@ -40,5 +40,20 @@
 
 (defn move [{:keys [body dir] :as snake} & grow]
   (assoc snake :body
+         ; The cons is operating on the result of the add-points and if
          (cons (add-points (first body) dir)
                (if grow body (butlast body)))))
+
+(defn win? [{body :body}]
+  (>= (count body) win-length))
+
+(defn head-overlaps-body? [{[head & body] :body}]
+  (contains? (set body) head))
+
+(def lose? head-overlaps-body?)
+
+(defn eats? [{[snake-head] :body} {apple :location}]
+  (= snake-head apple))
+
+(defn turn [snake newDir]
+  (assoc snake :dir newDir))
