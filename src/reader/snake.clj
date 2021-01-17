@@ -115,12 +115,27 @@
                           (when (win? @snake)
                             (reset-game snake apple)
                             (JOptionPane/showMessageDialog frame "You win!"))
-                          (. repaint this))
+                          (.repaint this))
          (keyPressed [e]
-                     (update-direction snake (dirs (. getKeyCode e))))
+                     (update-direction snake (dirs (.getKeyCode e))))
          (getPreferredSize []
                            (Dimension. (* (inc width) point-size)
                                        (* (inc height) point-size)))
          (keyReleased [e])
          (keyTyped [e])))
 
+(defn game []
+  (let [snake (ref (create-snake))
+        apple (ref (create-apple))
+        frame (JFrame. "Snake")
+        panel (game-panel frame snake apple)
+        timer (Timer. turn-millis panel)]
+    (doto panel
+          (.setFocusable true)
+          (.addKeyListener panel))
+    (doto frame
+          (.add panel)
+          (.pack)
+          (.setVisible true))
+    (.start timer)
+    [snake apple timer]))
