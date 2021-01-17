@@ -9,7 +9,6 @@
 
 ; END: namespace
 
-; TODO: implement the Snake!
 (def width 75)
 (def height 50)
 (def point-size 10)
@@ -30,7 +29,16 @@
 
 (defn create-apple []
   {:location [(rand-int width) (rand-int height)]
-   :color (Color. 210 50 90)
-   :type :apple})
+   :color    (Color. 210 50 90)
+   :type     :apple})
 
-; (defn create-snake [])
+(defn create-snake []
+  {:body  (list [1 1])
+   :dir   [1 0]
+   :type  :snake
+   :color (Color. 15 160 70)})
+
+(defn move [{:keys [body dir] :as snake} & grow]
+  (assoc snake :body
+         (cons (add-points (first body) dir)
+               (if grow body (butlast body)))))
