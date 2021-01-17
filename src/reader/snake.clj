@@ -57,3 +57,22 @@
 
 (defn turn [snake newDir]
   (assoc snake :dir newDir))
+
+(defn reset-game [snake apple]
+  (dosync (ref-set apple (create-apple))
+          (ref-set snake (create-snake)))
+  nil)
+
+(defn update-direction [snake newDir]
+  (when newDir (dosync (alter snake turn newDir))))
+
+(defn update-positions [snake apple]
+  (dosync
+   (if (eats? @snake @apple)
+     (do (ref-set apple (create-apple))
+       (alter snake move :grow))
+     (alter snake move)))
+  nil)
+
+(def test-snake (ref nil))
+(def test-apple (ref nil))
