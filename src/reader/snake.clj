@@ -58,6 +58,7 @@
 (defn turn [snake newDir]
   (assoc snake :dir newDir))
 
+
 (defn reset-game [snake apple]
   (dosync (ref-set apple (create-apple))
           (ref-set snake (create-snake)))
